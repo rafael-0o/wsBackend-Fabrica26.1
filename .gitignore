@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtualenv
+venv/
+.venv/
+
+# Django
+db.sqlite3
+*.sqlite3
+staticfiles/
+media/
+local_settings.py
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Testing / tooling
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# IDEs
+.vscode/
+.idea/
+
+# Cursor
+.cursor/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local Docker overrides (optional per machine)
+docker-compose.override.yml
+
