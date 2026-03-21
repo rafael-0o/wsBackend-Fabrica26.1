@@ -10,7 +10,7 @@ from .utils import enrich_squad_members
 import requests
 
 def home_page(request):
-    return render(request, "squadManager/index.html", {"user": request.user})
+    return render(request, "squadManager/home.html", {"user": request.user})
 
 
 def login_page(request):
@@ -139,7 +139,8 @@ def delete_squad_member(request, member_id):
         return redirect("squad_page")
     
     return render(request, "squadManager/delete_member.html", {"member": member})
-
+    
+   
 
 def register_page(request):
     if request.method == "POST":

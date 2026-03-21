@@ -1,0 +1,67 @@
+{% extends "squadManager/base.html" %}
+{% block body_attrs %}{% endblock %}
+{% block title %}My squad · Intergalactic Squad Manager{% endblock %}
+
+{% block content %}
+  <div class="grid cols-2">
+    <section class="card">
+      <div class="pill">My squad</div>
+      <p class="small muted">Edit your members or recruit more.</p>
+      <hr class="hr" />
+      <div class="row row-fixed">
+        <a href="{% url 'search_characters' %}" class="pill secondary">Recruit +</a>
+        <a href="{% url 'home_page' %}" class="pill">← Back</a>
+      </div>
+    </section>
+    <section class="card">
+      <div class="pill">Tip</div>
+      <p class="small muted">Click "Edit" to change role and note, or "Remove" to take out of squad.</p>
+    </section>
+  </div>
+
+  {% if enriched_members %}
+  <section class="card mt-3">
+    <div class="pill">Members ({{ enriched_members|length }})</div>
+    <hr class="hr" />
+    <div class="grid cols-2">
+      {% for item in enriched_members %}
+      <div class="card">
+        {% if item.character %}
+        <div class="char">
+          <img src="{{ item.character.image }}" alt="{{ item.character.name }}" />
+          <div class="char-body">
+            <h4>{{ item.character.name }}</h4>
+            <p class="small muted">{{ item.character.species }} · {{ item.character.status }}</p>
+            <p class="small muted">ID: {{ item.character.id }}</p>
+          </div>
+        </div>
+        {% else %}
+        <div class="char">
+          <div class="char-body">
+            <h4>Character {{ item.member.character_id }}</h4>
+            <p class="small muted">Data unavailable</p>
+          </div>
+        </div>
+        {% endif %}
+        <hr class="hr" />
+        <div class="grid">
+          <div><label class="small muted">Role: <strong>{{ item.member.role }}</strong></label></div>
+          <div><label class="small muted">Note: <strong>{{ item.member.tactical_note|default:"(empty)" }}</strong></label></div>
+        </div>
+        <div class="row row-fixed mt-3">
+          <a href="{% url 'edit_squad_member' item.member.id %}" class="pill secondary">Edit</a>
+          <a href="{% url 'delete_squad_member' item.member.id %}" class="pill danger">Remove</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% else %}
+  <section class="card mt-3">
+    <div class="pill">Empty Squad</div>
+    <p class="small muted">You don't have any members in your squad yet.</p>
+    <hr class="hr" />
+    <a href="{% url 'search_characters' %}" class="pill">Recruit characters →</a>
+  </section>
+  {% endif %}
+{% endblock %}

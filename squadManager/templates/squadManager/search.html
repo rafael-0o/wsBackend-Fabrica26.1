@@ -1,0 +1,67 @@
+{% extends "squadManager/base.html" %}
+{% block title %}Search Characters · Intergalactic Squad Manager{% endblock %}
+
+{% block content %}
+  <section class="card">
+    <div class="pill">Search Characters</div>
+    <p class="small muted">Search for characters to add to your squad.</p>
+    <hr class="hr" />
+    <form method="get" action="">
+      <div class="row">
+        <input type="text" name="name" placeholder="name (ex.: rick)" value="{{ search_name }}" />
+        <input type="text" name="page" class="input-narrow" placeholder="page (ex.: 1)" value="{{ search_page }}" />
+        <button type="submit">Search</button>
+      </div>
+    </form>
+    {% if search_error %}
+      <div class="toast toast-err mt-3">{{ search_error }}</div>
+    {% endif %}
+  </section>
+
+  {% if characters %}
+  <section class="card mt-3">
+    <div class="pill">Results</div>
+    <p class="small muted">Click "Recruit" to add to your squad.</p>
+    <hr class="hr" />
+    <div class="grid cols-3">
+      {% for character in characters %}
+      <div class="card">
+        <div class="char">
+          <img src="{{ character.image }}" alt="{{ character.name }}" />
+          <div class="char-body">
+            <h4>{{ character.name }}</h4>
+            <p class="small muted">{{ character.species }} · {{ character.status }}</p>
+            <p class="small muted">ID: {{ character.id }}</p>
+          </div>
+        </div>
+        <hr class="hr" />
+        <form method="post" action="{% url 'recruit_character' %}">
+          {% csrf_token %}
+          <input type="hidden" name="character_id" value="{{ character.id }}" />
+          <div class="grid">
+            <label class="small muted">Role
+              <select name="role">
+                <option value="RECON" selected>RECON</option>
+                <option value="LEAD">LEAD</option>
+                <option value="TANK">TANK</option>
+                <option value="SUPP">SUPP</option>
+              </select>
+            </label>
+            <label class="small muted">Note
+              <input type="text" name="tactical_note" placeholder="optional" />
+            </label>
+          </div>
+          <div class="row row-fixed mt-3">
+            <button type="submit">Recruit</button>
+          </div>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <div class="mt-3">
+    <a href="{% url 'squad_page' %}" class="pill">Go to squad →</a>
+  </div>
+{% endblock %}

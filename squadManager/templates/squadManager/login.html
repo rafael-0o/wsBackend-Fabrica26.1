@@ -1,0 +1,24 @@
+{% extends "squadManager/base.html" %}
+{% block title %}Login — Intergalactic Squad Manager{% endblock %}
+
+{% block content %}
+  <section class="card card-narrow">
+    <h2 style="margin: 0 0 8px;">Login</h2>
+    <p class="muted small" style="margin: 0 0 16px;">Login with your account.</p>
+
+    {% if error %}<div class="toast toast-err mt-3">{{ error }}</div>{% endif %}
+    <form method="post" action="">
+      {% csrf_token %}
+      <div class="grid mt-3">
+        <label class="small muted" for="username">Username
+          <input id="username" name="username" type="text" autocomplete="username" required value="{{ username|default:'' }}" />
+        </label>
+        <label class="small muted" for="password">Password
+          <input id="password" name="password" type="password" autocomplete="current-password" required />
+        </label>
+        <button type="submit">Login</button>
+      </div>
+    </form>
+    <p class="small mt-3"><a href="/api/web/register/">Don't have an account? Register here</a></p>
+  </section>
+{% endblock %}

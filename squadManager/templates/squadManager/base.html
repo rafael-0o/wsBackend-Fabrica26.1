@@ -1,0 +1,28 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Intergalactic Squad Manager{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'squadManager/app.css' %}" />
+  </head>
+  <body {% block body_attrs %}{% endblock %}>
+    <div class="wrap">
+      <header class="top">
+        <div>
+          <div class="brand">Rick & Morty: Intergalactic Squad Manager</div>
+          <div class="muted small">Squad Manager - No JavaScript</div>
+        </div>
+        <nav class="row row-fixed">
+          <a href="{% url 'home_page' %}" class="pill">Home</a>
+          <a href="{% url 'search_characters' %}" class="pill">Search</a>
+          <a href="{% url 'squad_page' %}" class="pill">My squad</a>
+        </nav>
+      </header>
+      {% block content %}{% endblock %}
+    </div>
+
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

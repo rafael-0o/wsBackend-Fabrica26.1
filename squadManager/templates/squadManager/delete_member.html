@@ -1,0 +1,18 @@
+{% extends "squadManager/base.html" %}
+{% block title %}Remove Member · Intergalactic Squad Manager{% endblock %}
+
+{% block content %}
+  <section class="card card-narrow">
+    <h2 style="margin: 0 0 8px;">Remove Member</h2>
+    <p class="muted small" style="margin: 0 0 16px;">Are you sure you want to remove character #{{ member.character_id }} from your squad?</p>
+    <hr class="hr" />
+    
+    <form method="post" action="">
+      {% csrf_token %}
+      <div class="row row-fixed mt-3">
+        <button type="submit" class="danger">Confirm Removal</button>
+        <a href="{% url 'squad_page' %}" class="pill secondary">Cancel</a>
+      </div>
+    </form>
+  </section>
+{% endblock %}
