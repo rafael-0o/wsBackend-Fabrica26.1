@@ -3,6 +3,8 @@ from rest_framework.routers import DefaultRouter
 
 from .viewSet import (
     RegisterUserView,
+    LoginView,
+    LogoutView,
     SquadMemberViewSet,
 )
 from .views import (
@@ -22,7 +24,9 @@ router.register(r"squad", SquadMemberViewSet, basename="squad")
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("auth/register", RegisterUserView.as_view(), name="user_register"),
+    path("auth/register/", RegisterUserView.as_view(), name="user_register"),
+    path("auth/login/", LoginView.as_view(), name="user_login"),
+    path("auth/logout/", LogoutView.as_view(), name="user_logout"),
     path("web/", home_page, name="home_page"),
     path("web/login/", login_page, name="login_page"),
     path("web/logout/", logout_page, name="logout_page"),

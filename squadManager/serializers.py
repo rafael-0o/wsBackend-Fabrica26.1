@@ -32,3 +32,8 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         user_model = get_user_model()
         return user_model.objects.create_user(**validated_data)
 
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
+
