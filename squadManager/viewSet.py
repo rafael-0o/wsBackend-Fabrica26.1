@@ -15,6 +15,9 @@ from .serializers import (
 from .utils import enrich_squad_members
 
 
+from rest_framework_simplejwt.tokens import RefreshToken
+
+
 class IsOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj) -> bool:
         return getattr(obj, "user_id", None) == getattr(request.user, "id", None)
@@ -56,19 +59,28 @@ class SquadMemberViewSet(viewsets.ModelViewSet):
 
 class RegisterUserView(APIView):
     permission_classes = [permissions.AllowAny]
+    authentication_classes = []
 
     def post(self, request):
         serializer = RegisterUserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        
+        refresh = RefreshToken.for_user(user)
         return Response(
-            {"id": user.id, "username": user.username},
+            {
+                "id": user.id,
+                "username": user.username,
+                "access": str(refresh.access_token),
+                "refresh": str(refresh),
+            },
             status=status.HTTP_201_CREATED,
         )
 
 
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
+    authentication_classes = []
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -85,8 +97,15 @@ class LoginView(APIView):
             )
         
         login(request, user)
+        
+        refresh = RefreshToken.for_user(user)
         return Response(
-            {"id": user.id, "username": user.username},
+            {
+                "id": user.id,
+                "username": user.username,
+                "access": str(refresh.access_token),
+                "refresh": str(refresh),
+            },
             status=status.HTTP_200_OK,
         )
 
