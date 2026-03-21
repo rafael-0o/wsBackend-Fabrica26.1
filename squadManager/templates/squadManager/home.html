@@ -1,0 +1,45 @@
+{% extends "squadManager/base.html" %}
+{% block body_attrs %}data-page="home"{% endblock %}
+{% block title %}Home · Intergalactic Squad Manager{% endblock %}
+
+{% block content %}
+  <div class="grid cols-2">
+    <section class="card">
+      <div class="pill"> Login </div>
+      <p class="small muted">Place your user (ex.: caio).</p>
+      <hr class="hr" />
+      <div class="grid">
+        <label class="small muted">Username<input id="username" placeholder="seu_user" /></label>
+        <label class="small muted">Password<input id="password" type="password" placeholder="sua_senha" /></label>
+        <div class="row row-fixed">
+          <button type="button" id="btnLogin">Login</button>
+          <button type="button" id="btnLogout" class="secondary">Logout</button>
+        </div>
+        <div id="authToast" class="toast hidden"></div>
+        <p class="small muted">Token saved in browzer(localStorage).</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="pill">2) Search character</div>
+      <p class="small muted">Busca via <code>/api/rickmorty/characters/</code></p>
+      <hr class="hr" />
+      <div class="row">
+        <input id="qName" placeholder="nome (ex.: rick)" />
+        <input id="qPage" class="input-narrow" placeholder="page (ex.: 1)" />
+      </div>
+      <div class="row row-fixed mt-3">
+        <button type="button" id="btnSearch" class="secondary">Search</button>
+        <a class="pill right" href="/api/web/squad/">Go to squad →</a>
+      </div>
+      <div id="searchToast" class="toast hidden mt-3"></div>
+    </section>
+  </div>
+
+  <section class="card mt-3">
+    <div class="pill">Results</div>
+    <p class="small muted">Click in “Recruit” to add in your squad (require login).</p>
+    <hr class="hr" />
+    <div id="results" class="grid cols-3"></div>
+  </section>
+{% endblock %}

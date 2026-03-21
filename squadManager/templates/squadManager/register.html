@@ -1,0 +1,28 @@
+{% extends "squadManager/base.html" %}
+{% block title %}Cadastro — Intergalactic Squad Manager{% endblock %}
+
+{% block content %}
+  <section class="card card-narrow">
+    <h2 style="margin: 0 0 8px;">Create account</h2>
+    <p class="muted small" style="margin: 0 0 16px;">User and password(mín. 6 chars).</p>
+
+    {% if success %}
+      <div class="toast toast-ok mt-3">{{ success }}</div>
+      <p class="small mt-3"><a href="/api/web/">Go to homepage</a> and do login</p>
+    {% else %}
+      {% if error %}<div class="toast toast-err mt-3">{{ error }}</div>{% endif %}
+      <form method="post" action="">
+        {% csrf_token %}
+        <div class="grid mt-3">
+          <label class="small muted" for="username">User
+            <input id="username" name="username" type="text" autocomplete="username" required value="{{ username|default:'' }}" />
+          </label>
+          <label class="small muted" for="password">Password
+            <input id="password" name="password" type="password" autocomplete="new-password" required minlength="6" />
+          </label>
+          <button type="submit">Register</button>
+        </div>
+      </form>
+    {% endif %}
+  </section>
+{% endblock %}
