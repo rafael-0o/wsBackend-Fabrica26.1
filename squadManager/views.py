@@ -1,18 +1,26 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
+from .models import SquadMember
+from .rickmorty_client import RickMortyClient
 from .serializers import RegisterUserSerializer
-
+from .utils import enrich_squad_members
 
 def home_page(request):
-    return render(request, "squadManager/home.html")
+    return render(request, "squadManager/index.html", {"user": request.user})
 
-
+@login_required(login_url="login_page")
 def squad_page(request):
-    return render(request, "squadManager/squad.html")
+    squad_members = SquadMember.objects.filter(user=request.user)
+    enriched_members = enrich_squad_members(squad_members)
+    
+    return render(request, "squadManager/squad.html", {
+        "enriched_members": enriched_members,
+    })
 
-
-def register_page(request):
+    def register_page(request):
     if request.method == "POST":
         username = (request.POST.get("username") or "").strip()
         password = request.POST.get("password") or ""
@@ -51,4 +59,27 @@ def register_page(request):
             "squadManager/register.html",
             {"success": "Conta criada! Você já pode fazer login na home."},
         )
-    return render(request, "squadManager/register.html")
+    return render(request, "squadManager/register.html")    
+
+def login_page(request):
+    if request.user.is_authenticated:
+        return redirect("home_page")
+    
+    if request.method == "POST":
+        username = (request.POST.get("username") or "").strip()
+        password = request.POST.get("password") or ""
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("home_page")
+        else:
+            return render(
+                request,
+                "squadManager/login.html",
+                {
+                    "error": "Invalid username or password.",
+                    "username": username,
+                },
+                status=401,
+            )
+    return render(request, "squadManager/login.html")
