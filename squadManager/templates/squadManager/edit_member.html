@@ -1,0 +1,45 @@
+{% extends "squadManager/base.html" %}
+{% block title %}Edit Member · Intergalactic Squad Manager{% endblock %}
+
+{% block content %}
+  <div class="grid cols-2">
+    <section class="card">
+      <div class="pill">Edit Squad Member</div>
+      <p class="small muted">Update the role and tactical note for this character.</p>
+      <hr class="hr" />
+      <div class="row row-fixed">
+        <a href="{% url 'squad_page' %}" class="pill">← Back to Squad</a>
+      </div>
+    </section>
+    <section class="card">
+      <div class="pill">Details</div>
+      <p class="small muted">Character ID: <strong>{{ member.character_id }}</strong></p>
+      <p class="small muted">Member since: <strong>{{ member.created_at|date:"M d, Y" }}</strong></p>
+    </section>
+  </div>
+
+  <section class="card mt-3">
+    <div class="pill">Edit Form</div>
+    <hr class="hr" />
+    <form method="post" action="">
+      {% csrf_token %}
+      <div class="grid">
+        <label class="small muted">Role
+          <select name="role">
+            <option value="RECON" {% if member.role == "RECON" %}selected{% endif %}>RECON</option>
+            <option value="LEAD" {% if member.role == "LEAD" %}selected{% endif %}>LEAD</option>
+            <option value="TANK" {% if member.role == "TANK" %}selected{% endif %}>TANK</option>
+            <option value="SUPP" {% if member.role == "SUPP" %}selected{% endif %}>SUPP</option>
+          </select>
+        </label>
+        <label class="small muted">Tactical Note
+          <input type="text" name="tactical_note" value="{{ member.tactical_note }}" placeholder="Enter tactical notes here..." />
+        </label>
+      </div>
+      <div class="row row-fixed mt-3">
+        <button type="submit">Save Changes</button>
+        <a href="{% url 'squad_page' %}" class="pill secondary">Cancel</a>
+      </div>
+    </form>
+  </section>
+{% endblock %}
