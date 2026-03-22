@@ -5,6 +5,9 @@ from .models import SquadMember
 
 
 class SquadMemberSerializer(serializers.ModelSerializer):
+    """
+    Serializer for basic creation and viewing of squad members.
+    """
     class Meta:
         model = SquadMember
         fields = ("id", "character_id", "role", "tactical_note", "created_at")
@@ -21,6 +24,10 @@ class SquadMemberEnrichedSerializer(serializers.Serializer):
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
+    """
+    Serializer for new user creation (Registration).
+    Includes password validation and secure creation via create_user.
+    """
     password = serializers.CharField(write_only=True, min_length=6)
 
     class Meta:
@@ -36,4 +43,14 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
+
+
+class TokenResponseSerializer(serializers.Serializer):
+    """
+    Serializer for the JWT token response (Login/Register).
+    """
+    id = serializers.IntegerField()
+    username = serializers.CharField()
+    access = serializers.CharField()
+    refresh = serializers.CharField()
 

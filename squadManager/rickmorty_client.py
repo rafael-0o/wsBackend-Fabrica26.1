@@ -8,6 +8,10 @@ import requests
 
 @dataclass(frozen=True)
 class RickMortyClient:
+    """
+    Client for consuming the official Rick & Morty API (https://rickandmortyapi.com/).
+    Provides methods to fetch characters by ID, list of IDs, or search by name/page.
+    """
     base_url: str = "https://rickandmortyapi.com/api"
     timeout_s: float = 10.0
 
@@ -22,7 +26,7 @@ class RickMortyClient:
         self, upstream_payload: Any
     ) -> dict[int, dict[str, Any]]:
         """
-        Normaliza o retorno da Rick and Morty API para:
+        Normalizes the Rick and Morty API return to:
         {<character_id>: <character_obj>}
         """
         if isinstance(upstream_payload, list):
@@ -36,6 +40,9 @@ class RickMortyClient:
         return {}
 
     def get_character(self, character_id: int) -> dict[str, Any]:
+        """
+        Returns data for a single character by ID.
+        """
         request_url = f"{self.base_url}/character/{character_id}"
         return self._fetch_json(request_url)
 
@@ -53,6 +60,9 @@ class RickMortyClient:
         return self._map_characters_by_id(upstream_payload)
 
     def search_characters(self, *, name: str | None = None, page: int | None = None) -> dict[str, Any]:
+        """
+        Searches characters by name and/or page using API pagination.
+        """
         request_url = f"{self.base_url}/character"
         query_params: dict[str, Any] = {}
         if name:

@@ -10,10 +10,16 @@ from .utils import enrich_squad_members
 import requests
 
 def home_page(request):
+    """
+    Displays the project's home page with links to key web features.
+    """
     return render(request, "squadManager/home.html", {"user": request.user})
 
 
 def login_page(request):
+    """
+    Renders the login form and processes session-based authentication (web).
+    """
     if request.user.is_authenticated:
         return redirect("home_page")
     
@@ -44,6 +50,9 @@ def logout_page(request):
 
 @login_required(login_url="login_page")
 def search_characters_page(request):
+    """
+    Searches for characters in the Rick & Morty API and renders the list with recruitment options.
+    """
     characters = []
     search_error = None
     search_name = request.GET.get("name", "").strip()
@@ -72,6 +81,9 @@ def search_characters_page(request):
 
 @login_required(login_url="login_page")
 def recruit_character(request):
+    """
+    Processes the recruitment form for a character into the logged-in user's squad.
+    """
     if request.method == "POST":
         character_id = request.POST.get("character_id", "").strip()
         role = request.POST.get("role", "").strip()
@@ -99,6 +111,9 @@ def recruit_character(request):
 
 @login_required(login_url="login_page")
 def squad_page(request):
+    """
+    Displays the list of recruited members in the logged-in user's squad.
+    """
     squad_members = SquadMember.objects.filter(user=request.user)
     enriched_members = enrich_squad_members(squad_members)
     
@@ -109,6 +124,9 @@ def squad_page(request):
 
 @login_required(login_url="login_page")
 def edit_squad_member(request, member_id):
+    """
+    Edits the data of a member in the logged-in user's squad.
+    """
     try:
         member = SquadMember.objects.get(id=member_id, user=request.user)
     except SquadMember.DoesNotExist:
@@ -129,6 +147,9 @@ def edit_squad_member(request, member_id):
 
 @login_required(login_url="login_page")
 def delete_squad_member(request, member_id):
+    """
+    Removes a member from the logged-in user's squad.
+    """
     try:
         member = SquadMember.objects.get(id=member_id, user=request.user)
     except SquadMember.DoesNotExist:
@@ -143,6 +164,9 @@ def delete_squad_member(request, member_id):
    
 
 def register_page(request):
+    """
+    Renders the registration page and processes new user creation via web.
+    """
     if request.method == "POST":
         username = (request.POST.get("username") or "").strip()
         password = request.POST.get("password") or ""

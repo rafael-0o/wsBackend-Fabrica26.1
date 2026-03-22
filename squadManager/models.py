@@ -6,6 +6,10 @@ from django.db import models
 
 
 class SquadMember(models.Model):
+    """
+    Represents a member of a user's squad.
+    Stores the reference to the Rick & Morty API character and custom data.
+    """
     class Role(models.TextChoices):
         LEAD = "LEAD"
         TANK = "TANK"

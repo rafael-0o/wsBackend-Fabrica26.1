@@ -4,13 +4,8 @@ import requests
 
 def enrich_squad_members(members):
     """
-    Enriches a list of SquadMember with data from the Rick & Morty API.
-
-    Args:
-        members: QuerySet or list of SquadMember
-
-    Returns:
-        list: List of dictionaries with 'member' and 'character' keys
+    Enriches the list of squad members with detailed data from the Rick & Morty API.
+    Makes requests to fetch information such as Name, Image, Species, Status, etc.
     """
     client = RickMortyClient()
     character_ids = [m.character_id for m in members]
@@ -25,7 +20,7 @@ def enrich_squad_members(members):
             for member in members
         ]
     except requests.RequestException:
-        # In case of API error, return without character data
+        # Case API error, return without data
         return [
             {
                 "member": member,
