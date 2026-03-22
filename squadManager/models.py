@@ -23,7 +23,7 @@ class SquadMember(models.Model):
     role = models.CharField(max_length=10, choices=Role.choices, default=Role.RECON)
     tactical_note = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    #para não add personagens duplicados
+    #to not add duplicated characters in the same squad
     class Meta:
         constraints = [
             models.UniqueConstraint(
