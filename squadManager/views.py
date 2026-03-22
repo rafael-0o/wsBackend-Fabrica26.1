@@ -104,7 +104,7 @@ def recruit_character(request):
             return render(
                 request,
                 "squadManager/search.html",
-                {"search_error": "Esse personagem já está no seu squad."},
+                {"search_error": "This character is already in your squad."},
             )
     return redirect("search_characters")
 
@@ -183,7 +183,7 @@ def register_page(request):
                 request,
                 "squadManager/register.html",
                 {
-                    "error": first_err or "Dados inválidos.",
+                    "error": first_err or "Invalid data.",
                     "username": username,
                 },
                 status=400,
@@ -195,7 +195,7 @@ def register_page(request):
                 request,
                 "squadManager/register.html",
                 {
-                    "error": "Esse nome de usuário já está em uso.",
+                    "error": "This username is already in use.",
                     "username": username,
                 },
                 status=400,
@@ -203,6 +203,6 @@ def register_page(request):
         return render(
             request,
             "squadManager/register.html",
-            {"success": "Conta criada! Você já pode fazer login na home."},
+            {"success": "Account created! You can now login on the home page."},
         )
     return render(request, "squadManager/register.html")

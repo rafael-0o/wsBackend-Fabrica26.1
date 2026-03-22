@@ -23,8 +23,9 @@
     <hr class="hr" />
     <form method="post" action="">
       {% csrf_token %}
-      <div class="grid">
-        <label class="small muted">Role
+      <div class="technical-grid">
+        <label>
+          <span class="tech-label">Role</span>
           <select name="role">
             <option value="RECON" {% if member.role == "RECON" %}selected{% endif %}>RECON</option>
             <option value="LEAD" {% if member.role == "LEAD" %}selected{% endif %}>LEAD</option>
@@ -32,7 +33,8 @@
             <option value="SUPP" {% if member.role == "SUPP" %}selected{% endif %}>SUPP</option>
           </select>
         </label>
-        <label class="small muted">Tactical Note
+        <label>
+          <span class="tech-label">Tactical Note</span>
           <input type="text" name="tactical_note" value="{{ member.tactical_note }}" placeholder="Enter tactical notes here..." />
         </label>
       </div>

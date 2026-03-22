@@ -43,10 +43,15 @@
           </div>
         </div>
         {% endif %}
-        <hr class="hr" />
-        <div class="grid">
-          <div><label class="small muted">Role: <strong>{{ item.member.role }}</strong></label></div>
-          <div><label class="small muted">Note: <strong>{{ item.member.tactical_note|default:"(empty)" }}</strong></label></div>
+        <div class="technical-grid">
+          <div>
+            <span class="tech-label">Role: </span>
+            <span class="tech-value">{{ item.member.role }}</span>
+          </div>
+          <div>
+            <span class="tech-label">Note: </span>
+            <span class="tech-value">{{ item.member.tactical_note|default:"(empty)" }}</span>
+          </div>
         </div>
         <div class="row row-fixed mt-3">
           <a href="{% url 'edit_squad_member' item.member.id %}" class="pill secondary">Edit</a>

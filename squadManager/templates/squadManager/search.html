@@ -34,24 +34,25 @@
             <p class="small muted">ID: {{ character.id }}</p>
           </div>
         </div>
-        <hr class="hr" />
         <form method="post" action="{% url 'recruit_character' %}">
           {% csrf_token %}
           <input type="hidden" name="character_id" value="{{ character.id }}" />
-          <div class="grid">
-            <label class="small muted">Role
-              <select name="role">
-                <option value="RECON" selected>RECON</option>
-                <option value="LEAD">LEAD</option>
-                <option value="TANK">TANK</option>
-                <option value="SUPP">SUPP</option>
-              </select>
-            </label>
-            <label class="small muted">Note
-              <input type="text" name="tactical_note" placeholder="optional" />
-            </label>
-          </div>
-          <div class="row row-fixed mt-3">
+          <div class="technical-grid">
+          <label>
+            <span class="tech-label">Role</span>
+            <select name="role">
+              <option value="RECON" selected>RECON</option>
+              <option value="LEAD">LEAD</option>
+              <option value="TANK">TANK</option>
+              <option value="SUPP">SUPP</option>
+            </select>
+          </label>
+          <label>
+            <span class="tech-label">Note</span>
+            <input type="text" name="tactical_note" placeholder="optional" />
+          </label>
+        </div>
+        <div class="row row-fixed mt-3">
             <button type="submit">Recruit</button>
           </div>
         </form>
